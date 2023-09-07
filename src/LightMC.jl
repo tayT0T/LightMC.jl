@@ -1,5 +1,6 @@
 module LightMC
+export readparams, interface!, transfer!, convertwave!, applybc!, exported, phasePetzold, interface, updateed!, applybc!
 
-# Write your package code here.
+include("functions.jl")
 
 end
