@@ -200,8 +200,7 @@ function setwave!(η::Array{<:Float64,2},ηx::Array{<:Float64,2},ηy::Array{<:Fl
 end
 
 """
-    convertwave!(η::Array{<:Float64,2},ηx::Array{<:Float64,2},ηy::Array{<:Float64,2},
-                      η0::Array{<:AbstractFloat,2},ηx0::Array{<:AbstractFloat,2},ηy0::Array{<:AbstractFloat,2},kbc=0::Int64)   
+    convertwave!(η, ηx, ηy, η0, ηx0, ηy0, kbc)   
 
 Convert the surface wave geometry `η0', `ηx0', `ηy0' to  `η', `ηx', `ηy' with the same size as irradiance field. 
 Can be used for nonperiodic BC`kbc=1' (no interpolation) or periodic BC `kbc=0' (interpolation using FFT)
@@ -1119,7 +1118,7 @@ end
 # end
 
 """
-interaction(a::Float64,b::Float64,ph::Array{<:Float64,1},θps::Array{<:Float64,1},randrng)
+interaction(a, b, ph, θps, randrng)
 
     Photon interact with the partice within the water body
 """
