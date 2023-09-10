@@ -75,7 +75,11 @@ struct Param
     end 
 end
 
-"Read the parameter from the file light.yml"
+""" 
+    readparams(fname="light.yml")
+
+Read parameters from yml file `fname`. If `fname` is unspecified, use `light.yml` as the default file name.
+"""
 function readparams(fname="light.yml"::String)
     data = YAML.load_file(fname)
 
