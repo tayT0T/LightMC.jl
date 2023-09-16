@@ -367,6 +367,14 @@ function interface(ix::Int64,iy::Int64,η::Array{<:Float64,2},ηx::Array{<:Float
     return xpb,ypb,zpb,θ,ϕ,fres
 end   
 
+"""
+    transfer!(ed::Array{<:Float64,3},esol::Array{<:Float64,2},θ::Float64,ϕ::Float64,fres::Float64,ip::Int64,
+                   xpb::Float64,ypb::Float64,zpb::Float64,area::Vector{Float64},interi::Vector{Int64},
+                   interj::Vector{Int64},randrng,η::Array{<:Float64,2},ph::Array{<:Float64,1},
+                   θps::Array{<:Float64,1},p::Param,mode=0::Int64)
+
+Doing the Monte Carlo Simulation
+"""
 function transfer!(ed::Array{<:Float64,3},esol::Array{<:Float64,2},θ::Float64,ϕ::Float64,fres::Float64,ip::Int64,
                    xpb::Float64,ypb::Float64,zpb::Float64,area::Vector{Float64},interi::Vector{Int64},
                    interj::Vector{Int64},randrng,η::Array{<:Float64,2},ph::Array{<:Float64,1},
@@ -1195,7 +1203,11 @@ function pf2pfcum(pf::Array{<:Float64,1},scag::Array{<:Float64,1})
     return pfcum
 end
 
+"""
+    phasePetzold()
 
+Need to understand first lol 
+"""
 function phasePetzold()
     #ph is the cumulative distribution function for the Petzold measurement
     # Kirk, 1981, Monte Carlo procedure for simulating the penetration of light into natural waters
