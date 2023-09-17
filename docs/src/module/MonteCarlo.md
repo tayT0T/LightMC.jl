@@ -15,6 +15,9 @@ r=-\frac{1}{c}\ln{\Re}
 
 ## Sampling Scattering direction
 
+azimuthal angle in the plane of the scattering event relative to the direction of photons before scattering
+``\varphi`` is uniformly distribute between 0 and ``2\pi`` Therefore,
 ```math
 \varphi = 2\pi\Re
+To find the angle between new trajectory and the direction of photons before scattering, 
 ```
