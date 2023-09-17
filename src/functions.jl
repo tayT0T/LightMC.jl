@@ -898,6 +898,12 @@ function regulateij(i::Array{<:Int64,1},j::Array{<:Int64,1},nx::Int64,ny::Int64)
     return i,j
 end
 
+"""
+    regulateij!(i, j, nx, ny)
+
+if the position exceed the boundary, that position equal to another end. 
+Periodic Boundary condition (?), one end is equal to another end. 
+"""
 function regulateij!(i::Array{<:Int64,1},j::Array{<:Int64,1},nx::Int64,ny::Int64)
     if i[1]==0
         i[1] += nx-1
@@ -1304,20 +1310,29 @@ function surface(idie::Int64,isca::Int64,xpe::Float64,ype::Float64,zpe::Float64,
     return idie,isca
 end
 
+"""
+    interpolation2d(xpe, ype, p)
+
+Calculate 4 value of areas between (xpe,ype), the coordination where photons end up, and different grid point around (xpe,ype)
+"""
 function interpolation2d(xpe::Float64,ype::Float64,p::Param)
     x=p.x
     y=p.y
     i=[0; 0; 0; 1]
     j=[0; 0; 0; 1]
+    ""
     while x[i[4]] <= xpe && i[4] < size(x,1)
+        "i[4] is the position in the grid in which the x-coordinate of our grid is larger than the x-coordination where photons end up with"
         i[4] += 1	
     end
     while y[j[4]] <= ype && j[4] < size(y,1)
+        "j[4] is the position in the grid in which the y-coordinate of our grid is larger than the y-coordination where photons end up with"
         j[4] +=1
     end     
     i[1]=i[4]-1; j[1]=j[4]-1
     i[2]=i[1]+1; j[2]=j[1]     
     i[3]=i[1];   j[3]=j[1]+1
+    "position of i,j that satisfied the boundary condition"
     i,j=regulateij(i,j,p.nx,p.ny)
     area=zeros(4)
     area[1]=(x[i[4]]-xpe)*(y[j[4]]-ype)
@@ -1325,6 +1340,7 @@ function interpolation2d(xpe::Float64,ype::Float64,p::Param)
     area[3]=(x[i[2]]-xpe)*(ype-y[j[2]])
     area[4]=(xpe-x[i[1]])*(ype-y[j[1]])
     for k=1:4
+        "in the case that area calculaion is less than 0, print the error"
         if area[k] < 0
             coorerror(area[k],i[k],j[k],xpe,ype,x,y,k)
         end
@@ -1360,6 +1376,11 @@ function interpolation2d!(area::Vector{Float64},interi::Vector{Int64},
     return nothing
 end
 
+"""
+    coorerror(a ,i ,j ,xpe ,ype ,x ,y ,k)  
+
+Produce an error, when our area surface calculation (from function interpolation2d) is lower than 0
+"""
 function coorerror(a::Float64,i::Int64,j::Int64,xpe::Float64,ype::Float64,x::Array{<:Float64,1},y::Array{<:Float64,1},k::Int64)
     println("In surface")
     println("a=$a")
