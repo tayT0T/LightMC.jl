@@ -420,6 +420,7 @@ function transfer!(ed::Array{<:Float64,3},esol::Array{<:Float64,2},θ::Float64,�
             kk=floor(Int,(z[1]-zpb)/dz)
             if dzl > 0
                 "if the photon travel to some depth"
+                "isign determine which direction photons travle, if isign ==1 photons travel downward, isign == -1, photons reflect and travel upward"
                 isign=1
                 kk=kk+1
             else 
@@ -1146,7 +1147,7 @@ function interaction(a::Float64,b::Float64,ph::Array{<:Float64,1},θps::Array{<:
     ro1=rand(randrng)
     nums=size(ph,1)
     if ro1 > b/(a+b) 
-        "single-scattering albedo, b/(a+b), determine the likeliness of being absorb or scatter. If ro1 is higher than thensingle-scattering albedo, the photon is being absorbed"        
+        "single-scattering albedo, b/(a+b), determine the likeliness of being absorb or scatter. If ro1 is higher than single-scattering albedo, the photon is being absorbed"        
         θ=0.0
         "cosine of the scattering angle"
         ϕ=0.0
@@ -1155,9 +1156,11 @@ function interaction(a::Float64,b::Float64,ph::Array{<:Float64,1},θps::Array{<:
     else         
         isca=1
         idie=0
+        "azimuthal angle (angle in the xy plane) determine by the monte carlo simulation"
         ϕ=rand(randrng)*2*pi
         ro2=rand(randrng)
         if ro2 < ph[1]
+            "ph is the cumulative distribution function for the Petzold measurement"
             θ=(0+θps[1]*ro2/ph[1])
         else
             for i=1:nums
@@ -1228,11 +1231,17 @@ function phasePetzold()
             62.5            67.5            72.5            77.5            82.5            87.5
             92.5            97.5            102.5            107.5            112.5            117.5
             122.5            127.5            132.5            137.5            142.5            147.5
-            152.5            157.5            162.5            167.5            172.5            177.5]',(36,1))[:]    
+            152.5            157.5            162.5            167.5            172.5            177.5]',(36,1))[:]   
+    "Changing θps to radian unit" 
     θps = θps .* π/180
     return ϕps, θps
 end
 
+"""
+    scatter(θ,ϕ,θs,ϕs) 
+
+
+"""
 function scatter(θ::Float64,ϕ::Float64,θs::Float64,ϕs::Float64)      
     # teta is solar angle, ϕ is azimuthal angle
     # θs and ϕs are scattering angle with respect to the initial direction
@@ -1281,11 +1290,11 @@ function scatter(θ::Float64,ϕ::Float64,θs::Float64,ϕs::Float64)
 end
 
 """
-surface(idie::Int64,isca::Int64,xpe::Float64,ype::Float64,zpe::Float64,
+    surface(idie::Int64,isca::Int64,xpe::Float64,ype::Float64,zpe::Float64,
                  area::Vector{Float64},interi::Vector{Int64},interj::Vector{Int64},
                  η::Array{<:Float64,2},ip::Int64,p::Param)
     
-    Checking whether or not the photon go through the surface back to air side
+Checking whether or not the photon go through the surface back to air side
 """
 
 function surface(idie::Int64,isca::Int64,xpe::Float64,ype::Float64,zpe::Float64,
