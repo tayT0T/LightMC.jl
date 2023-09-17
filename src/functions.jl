@@ -1137,9 +1137,11 @@ end
 # end
 
 """
-interaction(a, b, ph, θps, randrng)
+    interaction(a, b, ph, θps, randrng)
 
-    Photon interact with the partice within the water body
+Determine whether or not photon being absorb or scattering, and 
+if the photon is scattered, determined the angle in the plane of the scattering event relative to the direction of photons before scattering
+when ϕ is azimuthal angle, and θ is angle between scattered direction and direction of photons before scattering
 """
 
 function interaction(a::Float64,b::Float64,ph::Array{<:Float64,1},θps::Array{<:Float64,1},randrng)
@@ -1156,15 +1158,19 @@ function interaction(a::Float64,b::Float64,ph::Array{<:Float64,1},θps::Array{<:
     else         
         isca=1
         idie=0
-        "azimuthal angle (angle in the xy plane) determine by the monte carlo simulation"
+        "azimuthal angle in the plane of the scattering event relative to the direction of photons before scattering"
         ϕ=rand(randrng)*2*pi
         ro2=rand(randrng)
         if ro2 < ph[1]
-            "ph is the cumulative distribution function for the Petzold measurement"
+            #if the random number R is lower than the 0.517 (ph[1]), or the angle between 0 and 2.5 deg, (a little scattering)
+            "treat the function of cumulative probabilty of scattering and corresponding angle (from 0 to 2.5 deg) as a linear functions"
             θ=(0+θps[1]*ro2/ph[1])
         else
             for i=1:nums
+                #find the interval of cumulative probabilty of scattering (ph or ϕps) that would contain the random number R
                 if ro2 > ph[i] && ro2 <= ph[i+1]
+                    #the random number is in the interval (ph[i],ph[i+1]], ph[i] < R <= ph[i+1]
+                    "interpolation function (?)"
                     θ=(θps[i]*(ph[i+1]-ro2)+θps[i+1]*(ro2-ph[i]))/(ph[i+1]-ph[i])
                     break
                 end
@@ -1215,7 +1221,10 @@ end
 """
     phasePetzold()
 
-Need to understand first lol 
+return 2 arrays: ϕps and θps. When ϕps is the cumulation distribution of scattering angle and
+θps is the angle between new trajectory and the direction of the photon before scattering corresponding to each ϕps
+For example, the probability to find the scattering photon from the direction of the photon before scattering to θps[1] is ϕps[1]
+The data come from Kirk,1981, Monte Carlo Procedure for Simulating the Penetration of Light into Natural Waters
 """
 function phasePetzold()
     #ph is the cumulative distribution function for the Petzold measurement
