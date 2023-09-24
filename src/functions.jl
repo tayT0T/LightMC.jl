@@ -333,6 +333,7 @@ function interface(ix::Int64,iy::Int64,η::Array{<:Float64,2},ηx::Array{<:Float
     gama=acos(1/(ηx0^2+ηy0^2+1)^0.5)               
     "gamap -- angle of trasmission"        
     gamap=asin(((ηx0^2+ηy0^2)/(ηx0^2+ηy0^2+1))^0.5*na/nw)  
+    #θ is polar angle; angle between z axis and transmittdd ray, when the photons is coming directly downward [0;0;-1]
     θ=gama-gamap                
     if abs(gama) < 1e-12  
         "if the angle is near zero, all the energy will transmit into the water, without any reflection"                                  
@@ -1249,7 +1250,7 @@ end
 """
     scatter(θ,ϕ,θs,ϕs) 
 
-
+changing the scattered ray frame of referece, from the local system to the sphere coordination
 """
 function scatter(θ::Float64,ϕ::Float64,θs::Float64,ϕs::Float64)      
     # teta is solar angle, ϕ is azimuthal angle
