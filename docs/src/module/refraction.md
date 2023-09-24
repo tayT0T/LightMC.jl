@@ -22,8 +22,26 @@ angle of transmission
 \theta_{t} = \sin^{-1}\left(\frac{1}{n_{w}}\sin\theta'\right)
 ```
 
+```math
+\theta_{t} = \sin^{-1}\left(\frac{n_{a}}{n_{w}}\sqrt{\frac{\left(\eta_{x}\right)^{2}+\left(\eta_{y}\right)^{2}}{1+\left(\eta_{x}\right)^{2}+\left(\eta_{y}\right)^{2}}}\right)
+```
+
+
 ## Fresnel Reflectance 
 
 ```math
 r(\theta') \equiv r(\hat{\xi}'\cdot\hat{n}) = \frac{1}{2}\left\{\left[\frac{\sin(\theta'-\theta_{t})}{\sin(\theta'-\theta_{t})}\right]^2+\left[\frac{\tan(\theta'-\theta_{t})}{\tan(\theta'-\theta_{t})}\right]^2\right\}
+```
+
+```math
+r(\theta') \equiv r(\hat{\xi}'\cdot\hat{n}) = \frac{1}{2}\left\{\left[\frac{2\sin(\theta_{t})\cos(\theta')}{\sin(\theta'-\theta_{t})}\right]^2+\left[\frac{2\sin(\theta_{t})\cos(\theta')}{\sin(\theta'+\theta_{t})\cos(\theta'-\theta_{t})}\right]^2\right\}
+```
+
+## result  
+
+```math
+temx = -\frac{\eta_{x}}{\sqrt{(\eta_{x})^{2}+(\eta_{y})^{2}}}
+```
+```math
+temy = -\frac{\eta_{y}}{\sqrt{(\eta_{x})^{2}+(\eta_{y})^{2}}}
 ```
