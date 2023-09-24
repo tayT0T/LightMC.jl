@@ -335,7 +335,7 @@ function interface(ix::Int64,iy::Int64,η::Array{<:Float64,2},ηx::Array{<:Float
     gamap=asin(((ηx0^2+ηy0^2)/(ηx0^2+ηy0^2+1))^0.5*na/nw)  
     θ=gama-gamap                
     if abs(gama) < 1e-12  
-        "if the incident angle is near zero, all the energy will transmit into the water, without any reflection"                                  
+        "if the angle is near zero, all the energy will transmit into the water, without any reflection"                                  
         fres=1.0                                            
         ϕ=0.0
     else
