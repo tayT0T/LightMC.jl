@@ -1270,7 +1270,9 @@ function scatter(θ::Float64,ϕ::Float64,θs::Float64,ϕs::Float64)
         μzs=cos(θs)*μz/abs(μz)         
     else         
         μs=cos(θs)
+        "sqms is the sin(θs)"
         sqms=(1-μs^2)^0.5
+        "sqmz in the sin(θ)"
         sqmz=(1-μz^2)^0.5
         rsq=1/sqmz
         μxs=μx*μz*rsq*sqms*cos(ϕs)-μy*rsq*sqms*sin(ϕs)+μx*μs

@@ -5,3 +5,8 @@ LightMC.jl is a collection of functions that can be used to calculate the downaw
 Simulation
 
 ## Installation
+
+```@example
+using Pkg 
+Pkg.activate("https://github.com/tayT0T/LightMC.jl.git") 
+```
