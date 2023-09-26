@@ -1251,21 +1251,22 @@ end
     scatter(θ,ϕ,θs,ϕs) 
 
 changing the scattered ray frame of referece, from the local system to the sphere coordination
+when, θ is polar angle, ϕ is azimuthal angle, and θs and ϕs are scattering angle with respect to the initial direction
 """
 function scatter(θ::Float64,ϕ::Float64,θs::Float64,ϕs::Float64)      
-    # teta is solar angle, ϕ is azimuthal angle
-    # θs and ϕs are scattering angle with respect to the initial direction
-
-    # unit vector in initial direction: (μx,μy,μz)
-    # unit vector in new direction: (μxs,μys,μzs)
-    # initial direction
+    "μx is the cartesian coordination in x direction of the unit vector in initial direction: (μx,μy,μz)"
     μx=sin(θ)*cos(ϕ)
+    "μy is the cartesian coordination in y direction of the unit vector in initial direction: (μx,μy,μz)"
     μy=sin(θ)*sin(ϕ)
+    "μz is the cartesian coordination in z direction of the unit vector in initial direction: (μx,μy,μz), when upward direction is positive"
     μz=-cos(θ)
-    # new direction
-    if abs(μz) > 0.99999         
+    if abs(μz) > 0.99999  
+        #Find cartesian coordination of the unit vector in new direction: (μxs,μys,μzs), if incoming light ray is in the downward direction
+        "μxs is the cartesian coordination in x direction "
         μxs=sin(θs)*cos(ϕs)*μz/abs(μz)
+        "μys is the cartesian coordination in y direction "
         μys=sin(θs)*sin(ϕs)*μz/abs(μz)
+        "μzs is the cartesian coordination in z direction; when the upward direction is positive; last term would be postive if light coming upward"
         μzs=cos(θs)*μz/abs(μz)         
     else         
         μs=cos(θs)
