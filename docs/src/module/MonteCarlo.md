@@ -22,6 +22,3 @@ azimuthal angle in the plane of the scattering event relative to the direction o
 ```
 To find the angle between new trajectory and the direction of photons before scattering, we use the Petzold..
 
-## changing frame of reference 
-
-The result we got from the last section is in the local coordination system ``(\hat(\theta),\hat(\phi),\hat(r))``, when radial unit vector ``\hat(r)`` is the same initial direction of photons before scattering ``\hat{\xi}``, the azimuthal unit vector ``\hat(\phi)`` is defined by the cross product of the ocean coordinate system ``\hat{z}`` and the incident vector's direction ``\hat{\phi}=\frac{\hat{z}\times\hat{r}}{|\hat{z}\times\hat{r}|}``, and polar unit vector is given by ``\hat{\theta}=\hat{\phi}\times\hat{r}``. 
