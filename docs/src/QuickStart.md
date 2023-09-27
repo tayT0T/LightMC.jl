@@ -34,7 +34,11 @@ wave:
   pex: 0.07853981633974483
 ")
 ```
+We, then, store all the input variable in the struct p, by using the function below. 
 ```@example
+using Pkg # hide
+Pkg.activate("https://github.com/tayT0T/LightMC.jl.git") # hide
+import LightMC
 p=readparams()
 ```
 ```@example
@@ -63,6 +67,7 @@ fres=zeros(p.nxp,p.nyp)
 ix=div(p.nxη,2)+1
 iy=div(p.nyη,2)+1
 ```
+
 
 ## Run the Monte Carlo Simulation
 
