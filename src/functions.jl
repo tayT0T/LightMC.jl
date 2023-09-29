@@ -1280,21 +1280,31 @@ function scatter(θ::Float64,ϕ::Float64,θs::Float64,ϕs::Float64)
         μys=μy*μz*rsq*sqms*cos(ϕs)+μx*rsq*sqms*sin(ϕs)+μy*μs
         μzs=-sqmz*sqms*cos(ϕs)+μz*μs
     end
-    # new solar and azimuthal angles     
+    "solar angle: angle between scattered ray and positive z axis(upward direction)"   
     θ=pi-acos(μzs)    
     μzs=(μxs^2+μys^2)^0.5
+    "normalize the term μxs; -1 <= μxs <= 1; before normalize term μxs depend on z coordination of scattered ray"
     μxs=μxs/μzs
+    "normalize the term μys; -1 <= μys <= 1; before normalize term μys depend on z coordination of scattered ray"
     μys=μys/μzs    
     if abs(μxs-1) < 1e-10
+        #if μxs = 1, μys is approx 0, and the scattered ray is almost only in the direction of positive x 
+        "azimuthal angle is zero, or the angle between light ray and positive x axis"
         ϕ=0.
     else
         if abs(μxs+1) < 1e-10
+            #if μxs = -1, μys is approx 0, and the scattered ray is almost only in the direction of negative x 
+            "azimuthal angle is 180 deg, or the angle between light ray and positive x axis"
             ϕ=pi
         else 
             if μys > 0 
+                # if the scattered ray is in the first and second quadrant 
+                "azimuthal angle is arccos of the x coordination"
                 ϕ=acos(μxs)
             else 
                 if μys < 0
+                    # if the scattered ray is in the third and fourth quadrant 
+                    "azimuthal angle is 360deg minus arccos of the x coordination"
                     ϕ=2*pi-acos(μxs)
                 end
             end
