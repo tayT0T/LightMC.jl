@@ -285,11 +285,11 @@ function interface(η::Array{<:Float64,2},ηx::Array{<:Float64,2},ηy::Array{<:F
     ypb=zeros(p.nxp,p.nyp)
     "the z-axis coordination of the Photon's position at the beginning"
     zpb=zeros(p.nxp,p.nyp)
-    "the angle of the light ray relative to the z axis"
+    "the angle of the light ray relative to the z axis: solar angle"
     θ=zeros(p.nxp,p.nyp)
-    "the angle of the light ray relative to the x axis"
+    "the angle of the light ray relative to the x axis: azimuthal angle"
     ϕ=zeros(p.nxp,p.nyp)
-    "fractional reflectance for unpolarized light"
+    "the fraction of light ray that transmit into the water"
     fres=zeros(p.nxp,p.nyp)
     for ix=1:p.nxp, iy=1:p.nyp
         xpb[ix,iy],ypb[ix,iy],zpb[ix,iy],θ[ix,iy],ϕ[ix,iy],fres[ix,iy]=interface(ix,iy,η,ηx,ηy,p)
@@ -336,26 +336,39 @@ function interface(ix::Int64,iy::Int64,η::Array{<:Float64,2},ηx::Array{<:Float
     "θ is polar angle; angle between z axis and transmittdd ray, when the photons is coming directly downward [0;0;-1]"
     θ=gama-gamap                
     if abs(gama) < 1e-12  
-        "if the angle is near zero, all the energy will transmit into the water, without any reflection"                                  
-        fres=1.0                                            
+        "if the angle is near zero, all the energy will transmit into the water, without any reflection" 
+        "all being trasmit, the fraction of trasmissiong is 1"
+        fres=1.0                                      
+        "azimuthal angle equals to 0"      
         ϕ=0.0
     else
         fres=((2*sin(gamap)*cos(gama)/sin(gama+gamap))^2
               +(2*sin(gamap)*cos(gama)/sin(gama+gamap)/cos(gama-gamap))^2)/2
+        "temx is the normalizing term of the slope in the x direction, -1 <= ηx0 <=1; if the slope is negative, the light ray travel into the negative side, temx positive"
         temx=-ηx0/(ηx0^2+ηy0^2)^0.5
+        "temy is the normalizing term of the slope in the y direction, -1 <= ηy0 <=1; if the slope is negative, the light ray travel into the negative side, temy positive "
         temy=-ηy0/(ηx0^2+ηy0^2)^0.5
         if abs(temy) <= 1e-12
+            "If the surface plane does not have any slope in the y direction"
             if abs(temx-1) <= 1e-12
+                "if normalized term of slope in x dir = -1, there is approx no slope in y direction: all the transmitted right ray going toward neg direction without any y coord"
+                "azimuthal angle is pi; no y coordination"
                 ϕ=pi
             end
             if abs(temx+1) <= 1e-12
+                "if normalized term of slope in x dir = 1, there is approx no slope in y direction: all the transmitted right ray going toward pos direction without any y coord"
+                "azimuthal angle is 0; no y coordination"
                 ϕ=0
             end
         else 
             if temy > 0
+                "if normalized term of slope in y dir is negative, y coord of scattered ray is negative, light in third and fourth quadrant"
+                "if slope is positive, light ray is in positive x coord, temx is negative, arccos(temx) is higher than 90 deg, and azimuthal angle land in fourth quadrant"
                 ϕ=pi+acos(temx)
             else 
                 if temy < 0
+                    "if normalized term of slope in y dir is positive, y coord of scattered ray is positive, light in first and second quadrant"
+                    "if slope is positive, light ray is in positive x coord, temx is negative, arccos(temx) is higher than 90 deg, and azimuthal angle land in first quadrant"
                     ϕ=pi-acos(temx)
                 end
             end
