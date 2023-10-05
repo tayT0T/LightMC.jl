@@ -1,6 +1,11 @@
 using LightMC
 using Test
+using HDF5
+include("light.yml")
+include("surfwave1.h5")
+
+parameter = readparams()
 
 @testset "LightMC.jl" begin
-    @test LightMC.
+    @test parameter.nxe == 512
 end
