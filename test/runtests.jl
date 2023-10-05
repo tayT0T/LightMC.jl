@@ -7,5 +7,5 @@ parameter = LightMC.readparams()
 
 @testset "LightMC.jl" begin
     @test parameter.nxe == 512
-    @test size(ϕps) == (36,1)
+    @test size(ϕps) == (36,)
 end
