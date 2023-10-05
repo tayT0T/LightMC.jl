@@ -8,13 +8,13 @@ parameter = LightMC.readparams()
 η=zeros(parameter.nxs,parameter.nys)
 ηx=zeros(parameter.nxs,parameter.nys)
 ηy=zeros(parameter.nxs,parameter.nys)
-fid=h5open("surfwave.h5","r")
+fid=h5open("surfwave1.h5","r")
 η0=read(fid,"eta")
 ηx0=read(fid,"ex")
 ηy0=read(fid,"ey")
 close(fid)
 
-convertwave!(η,ηx,ηy,η0,ηx0,ηy0,parameter.kbc)
+LightMC.convertwave!(η,ηx,ηy,η0,ηx0,ηy0,parameter.kbc)
 
 @testset "LightMC.jl" begin
     @test parameter.nxe == 512
