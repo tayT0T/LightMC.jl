@@ -1,6 +1,4 @@
 include("SerialFFT.jl")
-using YAML  #writing the file 
-using Test
 using .SerialFFT
 
 "All the Parameters and their attributes that will be used in the simulation"
