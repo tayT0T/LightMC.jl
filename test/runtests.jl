@@ -1,4 +1,5 @@
 using LightMC
+using HDF5
 
 parameter = LightMC.readparams()
 ϕps,θps = LightMC.phasePetzold()
@@ -6,6 +7,7 @@ parameter = LightMC.readparams()
 η=zeros(parameter.nxs,parameter.nys)
 ηx=zeros(parameter.nxs,parameter.nys)
 ηy=zeros(parameter.nxs,parameter.nys)
+
 fid=h5open("surfwave1.h5","r")
 η0=read(fid,"eta")
 ηx0=read(fid,"ex")
