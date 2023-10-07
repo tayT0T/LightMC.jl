@@ -1,5 +1,6 @@
 include("SerialFFT.jl")
 using .SerialFFT
+using Test
 
 "All the Parameters and their attributes that will be used in the simulation"
 struct Param    
