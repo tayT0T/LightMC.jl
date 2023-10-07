@@ -1,6 +1,4 @@
 using LightMC
-using Test
-using HDF5
 
 parameter = LightMC.readparams()
 ϕps,θps = LightMC.phasePetzold()
@@ -15,7 +13,6 @@ fid=h5open("surfwave1.h5","r")
 close(fid)
 
 LightMC.convertwave!(η,ηx,ηy,η0,ηx0,ηy0,parameter.kbc)
-"""
 
 @testset "LightMC.jl" begin
     @test parameter.nxe == 512
