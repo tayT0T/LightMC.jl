@@ -1,5 +1,7 @@
 using LightMC
 using HDF5
+using Test 
+using YAML
 
 parameter = LightMC.readparams()
 ϕps,θps = LightMC.phasePetzold()
