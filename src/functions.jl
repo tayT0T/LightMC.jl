@@ -1,5 +1,7 @@
 using YAML  #writing the file 
 using Test
+include("SerialFFT.jl")
+using .SerialFFT
 
 "All the Parameters and their attributes that will be used in the simulation"
 struct Param    
@@ -212,11 +214,13 @@ Can be used for nonperiodic BC`kbc=1' (no interpolation) or periodic BC `kbc=0' 
 function convertwave!(η::Array{<:Float64,2},ηx::Array{<:Float64,2},ηy::Array{<:Float64,2},
                       η0::Array{<:AbstractFloat,2},ηx0::Array{<:AbstractFloat,2},ηy0::Array{<:AbstractFloat,2},kbc=0::Int64)    
     if kbc==1
+        "nonperiodic boundary condition (no interpolation)"
         η[1:size(η0,1),1:size(η0,2)]=η0
         ηx[1:size(η0,1),1:size(η0,2)]=ηx0
         ηy[1:size(η0,1),1:size(η0,2)]=ηy0        
     end
     if kbc==0
+        "periodic boundary condition (with interpolation)"
         if size(η,1) > size(η0,1) && size(η,2) > size(η0,2)
             nh=size(η).-1
             η[1:nh[1],1:nh[2]]=padding(η0,nh)
@@ -342,6 +346,7 @@ function interface(ix::Int64,iy::Int64,η::Array{<:Float64,2},ηx::Array{<:Float
         "azimuthal angle equals to 0"      
         ϕ=0.0
     else
+        
         fres=((2*sin(gamap)*cos(gama)/sin(gama+gamap))^2
               +(2*sin(gamap)*cos(gama)/sin(gama+gamap)/cos(gama-gamap))^2)/2
         "temx is the normalizing term of the slope in the x direction, -1 <= ηx0 <=1; if the slope is negative, the light ray travel into the negative side, temx positive"
