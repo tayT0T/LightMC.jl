@@ -2,6 +2,9 @@ include("SerialFFT.jl")
 using .SerialFFT
 using Test
 using YAML 
+using Random
+using Statistics
+using HDF5
 
 "All the Parameters and their attributes that will be used in the simulation"
 struct Param    
