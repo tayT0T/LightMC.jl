@@ -7,5 +7,5 @@ using MPI
 @testset "LightMC.jl" begin
 
     @info "testing the functions being used in lightMC.jl package"
-    run(test_function.jl)
+    run(joinpath(@__DIR__,test_function.jl))
 end
