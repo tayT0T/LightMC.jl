@@ -57,7 +57,7 @@ ix=div(p.nxη,2)+1
 iy=div(p.nyη,2)+1
 
 transfer!(ed,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,xpb[ix,iy],
-        ypb[ix,iy],zpb[ix,iy],area,interi,interj,randrng,η,ϕps,θps,p,1)
+        ypb[ix,iy],zpb[ix,iy],area,interi,interj,randrng,η,ϕps,θps,parameter,1)
 
 @testset "Monte Carlo Simulation" begin
     @testset "transfer()" begin
