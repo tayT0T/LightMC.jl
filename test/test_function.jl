@@ -20,8 +20,9 @@ LightMC.convertwave!(η,ηx,ηy,η0,ηx0,ηy0,parameter.kbc)
 
 @testset "Functions" begin
     @testset "readparams()" begin
+        parameter = LightMC.readparams()
         @test typeof(parameter) == Param 
-        @test parameter.kbc <= 0
+        @test parameter.kbc >= 0
     end
     @testset "convertwave()" begin
         if parameter.kbc == 0

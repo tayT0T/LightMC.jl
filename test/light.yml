@@ -9,7 +9,7 @@ photon:
   nphoton: 10000000
   kr: 10
   nxp: 512
-  kbc: 1
+  kbc: 0
   b: 0.006
   nyp: 512
   a: 0.007
