@@ -45,3 +45,21 @@ xpb,ypb,zpb,θ,ϕ,fres = LightMC.interface(η,ηx,ηy,parameter)
     end 
 end
 
+allind = 1:parameter.nphoton
+ed = zeros(parameter.nx, parameter.ny, parameter.nz)
+esol = zeros(parameter.num, parameter.nz)
+randrng = MersenneTwister(1234)
+area=zeros(4)
+interi=zeros(Int64,4)
+interj=zeros(Int64,4)
+ix=div(p.nxη,2)+1
+iy=div(p.nyη,2)+1
+
+transfer!(ed,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,xpb[ix,iy],
+        ypb[ix,iy],zpb[ix,iy],area,interi,interj,randrng,η,ϕps,θps,p,1)
+
+@testset "Monte Carlo Simulation" begin
+    @testset "transfer()" begin
+        @test ed(ix,iy,parameter.ztop+1) != 0
+    end 
+end
