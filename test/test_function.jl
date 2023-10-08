@@ -2,6 +2,7 @@ using LightMC
 using Test 
 using YAML
 using HDF5
+using Random
 
 parameter = LightMC.readparams()
 ϕps,θps = LightMC.phasePetzold()
