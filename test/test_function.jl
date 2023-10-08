@@ -66,6 +66,6 @@ end
 
 @testset "Monte Carlo Simulation" begin
     @testset "transfer()" begin
-        @test ed[ix,iy,int(parameter.ztop)+5] >= 0
+        @test ed[ix,iy,floor(Int, parameter.ztop)+5] >= 0
     end 
 end
