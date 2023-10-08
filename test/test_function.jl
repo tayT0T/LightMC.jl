@@ -17,10 +17,8 @@ fid=h5open("surfwave1.h5","r")
 close(fid)
     
 LightMC.convertwave!(η,ηx,ηy,η0,ηx0,ηy0,parameter.kbc)
-transfer!(ed1d,edi,edj,edk,count,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,
-            xpb[ix,iy],ypb[ix,iy],zpb[ix,iy],randrng,η,ϕps,θps,parameter,1)
 
-@testset "Functions" begin
+@testset "Initial Condition" begin
     @testset "readparams()" begin
         @test parameter.kbc >= 0
     end
@@ -36,3 +34,14 @@ transfer!(ed1d,edi,edj,edk,count,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,
         @test size(θps) == (36,)
     end
 end
+
+xpb,ypb,zpb,θ,ϕ,fres = LightMC.interface(η,ηx,ηy,parameter)
+
+@testset "Refraction between atmosphere and water" begin
+    @testset "interface()" begin
+        @test size(fres) == (parameter.nxp,parameter.nyp)
+        @test size(θ) == (parameter.nxp,parameter.nyp)
+        @test size(ϕ) == (parameter.nxp,parameter.nyp)
+    end 
+end
+
