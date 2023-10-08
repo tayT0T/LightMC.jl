@@ -56,8 +56,13 @@ interj=zeros(Int64,4)
 ix=div(parameter.nxη,2)+1
 iy=div(parameter.nyη,2)+1
 
-transfer!(ed,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,xpb[ix,iy],
+@time begin
+    for ind=inds:inde
+        ip=allind[ind]
+        transfer!(ed,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,xpb[ix,iy],
         ypb[ix,iy],zpb[ix,iy],area,interi,interj,randrng,η,ϕps,θps,parameter,1)
+    end
+end
 
 @testset "Monte Carlo Simulation" begin
     @testset "transfer()" begin
