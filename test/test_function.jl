@@ -20,14 +20,14 @@ LightMC.convertwave!(η,ηx,ηy,η0,ηx0,ηy0,parameter.kbc)
 
 @testset "Functions" begin
     @testset "readparams()" begin
-        @test typeof(parameter) == DataType
-        @test typeof(parameter.nz) == Int
-        @test typeof(parameter.kbc) == Int
-        @test typeof(parameter.nxeta) == Int
+        @test typeof(parameter) == Param
+        @test typeof(parameter.nz) == Integer
+        @test typeof(parameter.kbc) == Integer
+        @test typeof(parameter.nxeta) == Integer
     end
     @testset "convertwave()" begin
         if parameter.kbc == 0
-            @test ηy[end,end]==ηy[1,1]
+            @test ηy[end,end] == ηy[1,1]
         else
             @test ηy[size(η0,1),size(η0,2)] == ηy0
         end
