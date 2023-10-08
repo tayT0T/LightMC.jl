@@ -57,9 +57,11 @@ ix=div(parameter.nxη,2)+1
 iy=div(parameter.nyη,2)+1
 
 @time begin
-    ip=allind
-    transfer!(ed,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,xpb[ix,iy],
-    ypb[ix,iy],zpb[ix,iy],area,interi,interj,randrng,η,ϕps,θps,parameter,1)
+    for ind=1:parameter.nphoton
+        ip=allind[ind]
+        transfer!(ed,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,xpb[ix,iy],
+        ypb[ix,iy],zpb[ix,iy],area,interi,interj,randrng,η,ϕps,θps,parameter,1)
+    end
 end
 
 @testset "Monte Carlo Simulation" begin
