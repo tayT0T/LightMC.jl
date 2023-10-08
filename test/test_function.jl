@@ -20,12 +20,19 @@ LightMC.convertwave!(η,ηx,ηy,η0,ηx0,ηy0,parameter.kbc)
 
 @testset "Functions" begin
     @testset "readparams()" begin
-        @test parameter.nxe == 512
+        @test typeof(parameter) == DataType
+        @test typeof(parameter.nz) == Int
+        @test typeof(parameter.kbc) == Int
+        @test typeof(parameter.nxeta) == Int
     end
     @testset "convertwave()" begin
-        @test ηy[end,end]==ηy[1,1]
+        if parameter.kbc == 0
+            @test ηy[end,end]==ηy[1,1]
+        else
+            @test ηy[size(η0,1),size(η0,2)] == ηy0
     end
-    @testset "Test the Cumulative Distribution variable of the scattering angle, phasePetzold()" begin
+    @testset "phasePetzold()" begin
         @test size(ϕps) == (36,)
+        @test size(θps) == (36,)
     end
 end
