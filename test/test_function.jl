@@ -30,6 +30,7 @@ LightMC.convertwave!(η,ηx,ηy,η0,ηx0,ηy0,parameter.kbc)
             @test ηy[end,end]==ηy[1,1]
         else
             @test ηy[size(η0,1),size(η0,2)] == ηy0
+        end
     end
     @testset "phasePetzold()" begin
         @test size(ϕps) == (36,)
