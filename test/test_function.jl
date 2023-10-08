@@ -5,7 +5,7 @@ using HDF5
 
 @testset "Test importing initial condition parameter, readparams()" begin
     parameter = LightMC.readparams()
-    @test parameter.nxe == 512
+    @test parameter.nxe == 511
 end
 
 @testset "Test surfave wave geometry, convertwave()" begin
