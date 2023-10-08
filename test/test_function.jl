@@ -20,16 +20,14 @@ LightMC.convertwave!(η,ηx,ηy,η0,ηx0,ηy0,parameter.kbc)
 
 @testset "Functions" begin
     @testset "readparams()" begin
-        @test typeof(parameter) == Param
-        @test typeof(parameter.nz) == Integer
-        @test typeof(parameter.kbc) == Integer
-        @test typeof(parameter.nxeta) == Integer
+        @test typeof(parameter) == Param 
+        @test parameter.kbc <= 0
     end
     @testset "convertwave()" begin
         if parameter.kbc == 0
             @test ηy[end,end] == ηy[1,1]
         else
-            @test ηy[size(η0,1),size(η0,2)] == ηy0
+            @test ηy[1:size(η0,1),1:size(η0,2)] == ηy0
         end
     end
     @testset "phasePetzold()" begin
