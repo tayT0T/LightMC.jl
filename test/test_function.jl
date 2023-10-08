@@ -18,7 +18,7 @@ close(fid)
     
 LightMC.convertwave!(η,ηx,ηy,η0,ηx0,ηy0,parameter.kbc)
 transfer!(ed1d,edi,edj,edk,count,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,
-            xpb[ix,iy],ypb[ix,iy],zpb[ix,iy],randrng,η,ϕps,θps,p,1)
+            xpb[ix,iy],ypb[ix,iy],zpb[ix,iy],randrng,η,ϕps,θps,parameter,1)
 
 @testset "Functions" begin
     @testset "readparams()" begin
