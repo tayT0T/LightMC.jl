@@ -57,11 +57,9 @@ ix=div(parameter.nxη,2)+1
 iy=div(parameter.nyη,2)+1
 
 @time begin
-    for ind=inds:inde
-        ip=allind[ind]
-        transfer!(ed,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,xpb[ix,iy],
-        ypb[ix,iy],zpb[ix,iy],area,interi,interj,randrng,η,ϕps,θps,parameter,1)
-    end
+    ip=allind
+    transfer!(ed,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,xpb[ix,iy],
+    ypb[ix,iy],zpb[ix,iy],area,interi,interj,randrng,η,ϕps,θps,parameter,1)
 end
 
 @testset "Monte Carlo Simulation" begin
