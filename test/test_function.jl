@@ -59,7 +59,7 @@ iy=div(parameter.nyη,2)+1
 @time begin
     for ind=1:parameter.nphoton
         ip=allind[ind]
-        transfer!(ed,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,xpb[ix,iy],
+        LightMC.transfer!(ed,esol,θ[ix,iy],ϕ[ix,iy],fres[ix,iy],ip,xpb[ix,iy],
         ypb[ix,iy],zpb[ix,iy],area,interi,interj,randrng,η,ϕps,θps,parameter,1)
     end
 end
@@ -69,3 +69,6 @@ end
         @test ed[ix,iy,floor(Int, parameter.ztop)+5] >= 0
     end 
 end
+
+LightMC.applybc!(ed,parameter)
+LightMC.exported(ed,η,parameter,"rawdat/ed","3D",176)
