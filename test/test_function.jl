@@ -74,4 +74,4 @@ end
 end
 
 LightMC.applybc!(ed,parameter)
-LightMC.exported(ed,η,parameter,"rawdat/ed","3D",176)
+LightMC.exported(ed,η,parameter,"ed","3D")
