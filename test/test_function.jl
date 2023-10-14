@@ -115,11 +115,11 @@ Bench_edyz = h5open("data/benchmark_data/edyz.h5","r")
 bench_edyz = read(Bench_edyz,"ed")
 close(Bench_edyz)
 
-scatterplot(randn(50), randn(50), title="My Scatterplot")
-
 @testset "Result" begin
     @testset "export data" begin
+        
     end 
     @testset "comparison with benchmark" begin
+        show("heloooooo")
     end 
 end
