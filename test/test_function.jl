@@ -4,7 +4,7 @@ using YAML
 using HDF5
 using Random
 
-parameter = LightMC.readparams()
+parameter = LightMC.readparams("data/initial_condition/light.yml")
 ϕps,θps = LightMC.phasePetzold()
 
 η=zeros(parameter.nxs,parameter.nys)
@@ -95,3 +95,11 @@ Test_edyz = h5open("data/test_data/edyz.h5","r")
 test_edyz = read(Test_edyz,"ed")
 close(Test_edyz)
 
+@testset "Result" begin
+    @testset "export data" begin
+        @test ed[ix,iy,floor(Int, parameter.ztop)+2] >= 0
+        @test ed[ix,iy,floor(Int, parameter.ztop)+3] >= 0
+        @test ed[ix,iy,floor(Int, parameter.ztop)+4] >= 0
+        @test ed[ix,iy,floor(Int, parameter.ztop)+5] >= 0
+    end 
+end
