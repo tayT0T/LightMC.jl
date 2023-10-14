@@ -75,3 +75,23 @@ end
 
 LightMC.applybc!(ed,parameter)
 LightMC.exported(ed,η,parameter,"data/test_data/ed","3D")
+
+Test_ed = h5open("data/test_data/ed.h5","r")
+test_ed = read(Test_ed,"ed")
+close(Test_ed)
+
+Test_edstats = h5open("data/test_data/edstats.h5","r")
+test_cv = read(Test_edstats, "cv")
+test_mean = read(Test_edstats, "mean")
+test_var = read(Test_edstats, "var")
+test_z = read(Test_edstats, "z")
+close(Test_edstats)
+
+Test_edxz = h5open("data/test_data/edxz.h5","r")
+test_edxz = read(Test_edxz,"ed")
+close(Test_edxz)
+
+Test_edyz = h5open("data/test_data/edyz.h5","r")
+test_edyz = read(Test_edyz,"ed")
+close(Test_edyz)
+
