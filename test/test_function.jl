@@ -115,11 +115,14 @@ Bench_edyz = h5open("data/benchmark_data/edyz.h5","r")
 bench_edyz = read(Bench_edyz,"ed")
 close(Bench_edyz)
 
+plt = lineplot([-1, 2, 3, 7], [-1, 2, 9, 4], title="Example", name="my line",
+               xlabel="x", ylabel="y", canvas=DotCanvas, border=:ascii)
+
 @testset "Result" begin
     @testset "export data" begin
         
     end 
     @testset "comparison with benchmark" begin
-        show("heloooooo")
+        show("plt")
     end 
 end
