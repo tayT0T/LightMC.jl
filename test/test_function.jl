@@ -123,6 +123,6 @@ plt = lineplot([-1, 2, 3, 7], [-1, 2, 9, 4], title="Example", name="my line",
         
     end 
     @testset "comparison with benchmark" begin
-        show("plt")
+        show(plt)
     end 
 end
