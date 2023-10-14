@@ -11,7 +11,7 @@ parameter = LightMC.readparams()
 ηx=zeros(parameter.nxs,parameter.nys)
 ηy=zeros(parameter.nxs,parameter.nys)
 
-fid=h5open("surfwave1.h5","r")
+fid=h5open("data/initial_condition/surfwave1.h5","r")
 η0=read(fid,"eta")
 ηx0=read(fid,"ex")
 ηy0=read(fid,"ey")
@@ -74,4 +74,4 @@ end
 end
 
 LightMC.applybc!(ed,parameter)
-LightMC.exported(ed,η,parameter,"data/test_data","3D")
+LightMC.exported(ed,η,parameter,"data/test_data/ed","3D")
