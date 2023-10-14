@@ -95,11 +95,30 @@ Test_edyz = h5open("data/test_data/edyz.h5","r")
 test_edyz = read(Test_edyz,"ed")
 close(Test_edyz)
 
+Bench_ed = h5open("data/benchmark_data/ed.h5","r")
+bench_ed = read(Bench_ed,"ed")
+close(Bench_ed)
+
+Bench_edstats = h5open("data/benchmark_data/edstats.h5","r")
+bench_cv = read(Bench_edstats, "cv")
+bench_mean = read(Bench_edstats, "mean")
+bench_var = read(Bench_edstats, "var")
+bench_z = read(Bench_edstats, "z")
+close(Bench_edstats)
+
+Bench_edxz = h5open("data/benchmark_data/edxz.h5","r")
+bench_edxz = read(Bench_edxz,"ed")
+close(Bench_edxz)
+
+Bench_edyz = h5open("data/benchmark_data/edyz.h5","r")
+bench_edyz = read(Bench_edyz,"ed")
+close(Bench_edyz)
+
 @testset "Result" begin
     @testset "export data" begin
-        @test ed[ix,iy,floor(Int, parameter.ztop)+2] >= 0
-        @test ed[ix,iy,floor(Int, parameter.ztop)+3] >= 0
-        @test ed[ix,iy,floor(Int, parameter.ztop)+4] >= 0
-        @test ed[ix,iy,floor(Int, parameter.ztop)+5] >= 0
+        @test test_ed == ed
+    end 
+    @testset "comparison with benchmark" begin
+        @test test_ed == ed
     end 
 end
