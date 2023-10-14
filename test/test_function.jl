@@ -74,4 +74,4 @@ end
 end
 
 LightMC.applybc!(ed,parameter)
-LightMC.exported(ed,η,parameter,"ed","3D")
+LightMC.exported(ed,η,parameter,"data/test_data","3D")
