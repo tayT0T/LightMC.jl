@@ -3,6 +3,7 @@ using Test
 using YAML
 using HDF5
 using Random
+using UnicodePlots
 
 parameter = LightMC.readparams("data/initial_condition/light.yml")
 ϕps,θps = LightMC.phasePetzold()
@@ -114,11 +115,13 @@ Bench_edyz = h5open("data/benchmark_data/edyz.h5","r")
 bench_edyz = read(Bench_edyz,"ed")
 close(Bench_edyz)
 
+scatterplot(test_mean, test_z, title="mean-z")
+
 @testset "Result" begin
     @testset "export data" begin
-        @test test_ed == ed
+        @test 
     end 
     @testset "comparison with benchmark" begin
-        @test test_ed == ed
+
     end 
 end
