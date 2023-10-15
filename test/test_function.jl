@@ -115,8 +115,8 @@ Bench_edyz = h5open("data/benchmark_data/edyz.h5","r")
 bench_edyz = read(Bench_edyz,"ed")
 close(Bench_edyz)
 
-plt = lineplot([-1, 2, 3, 7], [-1, 2, 9, 4], title="Example", name="my line",
-               xlabel="x", ylabel="y", canvas=DotCanvas, border=:ascii)
+plt = scatterplot(test_mean, test_z, title="mean irradiance - depth", name="test data",
+               xlabel="mean irradiance", ylabel="depth", canvas=DotCanvas, border=:ascii)
 
 @testset "Result" begin
     @testset "export data" begin
