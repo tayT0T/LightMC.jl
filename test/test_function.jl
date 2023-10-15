@@ -116,7 +116,7 @@ bench_edyz = read(Bench_edyz,"ed")
 close(Bench_edyz)
 
 plt = scatterplot(test_mean, test_z, title="mean irradiance - depth", name="test data", yscale=:log10,
-               xlabel="mean irradiance", ylabel="depth", canvas=dotCanvas)
+               xlabel="mean irradiance", ylabel="depth", canvas=DotCanvas)
 
 show(plt)
 
