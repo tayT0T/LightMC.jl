@@ -118,10 +118,13 @@ close(Bench_edyz)
 plt = lineplot(test_mean, test_z, title="mean irradiance - depth", name="test data",
                xlabel="mean irradiance", ylabel="depth", canvas=DotCanvas)
 
-#show(plt)
+show(plt)
 
 plot = heatmap(test_edxz)
 show(plot)
+
+plot1 = heatmap(test_ed[:,:,50])
+show(plot1)
 
 MaxPercentDif(array1,array2) = findmax(broadcast(abs,((array1-array2)/(array1))*100))
 (Diff_mean,loc_mean) = MaxPercentDif(test_mean,bench_mean)
