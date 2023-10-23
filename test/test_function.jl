@@ -4,6 +4,7 @@ using YAML
 using HDF5
 using Random
 using UnicodePlots
+using Statistics
 
 parameter = LightMC.readparams("data/initial_condition/light.yml")
 ϕps,θps = LightMC.phasePetzold()
@@ -74,67 +75,48 @@ end
     end 
 end
 
+test_data = tempdir()
 LightMC.applybc!(ed,parameter)
-LightMC.exported(ed,η,parameter,"data/test_data/ed","3D")
+LightMC.exported(ed,η,parameter,test_data*"/ed","3D")
 
-Test_ed = h5open("data/test_data/ed.h5","r")
+Test_ed = h5open(test_data*"/ed.h5","r")
 test_ed = read(Test_ed,"ed")
 close(Test_ed)
 
-Test_edstats = h5open("data/test_data/edstats.h5","r")
+Test_edstats = h5open(test_data*"/edstats.h5","r")
 test_cv = read(Test_edstats, "cv")
 test_mean = read(Test_edstats, "mean")
 test_var = read(Test_edstats, "var")
 test_z = read(Test_edstats, "z")
 close(Test_edstats)
 
-Test_edxz = h5open("data/test_data/edxz.h5","r")
+Test_edxz = h5open(test_data*"/edxz.h5","r")
 test_edxz = read(Test_edxz,"ed")
 close(Test_edxz)
 
-Test_edyz = h5open("data/test_data/edyz.h5","r")
+Test_edyz = h5open(test_data*"/edyz.h5","r")
 test_edyz = read(Test_edyz,"ed")
 close(Test_edyz)
 
-Bench_ed = h5open("data/benchmark_data/ed.h5","r")
-bench_ed = read(Bench_ed,"ed")
-close(Bench_ed)
-
-Bench_edstats = h5open("data/benchmark_data/edstats.h5","r")
-bench_cv = read(Bench_edstats, "cv")
-bench_mean = read(Bench_edstats, "mean")
-bench_var = read(Bench_edstats, "var")
-bench_z = read(Bench_edstats, "z")
-close(Bench_edstats)
-
-Bench_edxz = h5open("data/benchmark_data/edxz.h5","r")
-bench_edxz = read(Bench_edxz,"ed")
-close(Bench_edxz)
-
-Bench_edyz = h5open("data/benchmark_data/edyz.h5","r")
-bench_edyz = read(Bench_edyz,"ed")
-close(Bench_edyz)
-
-plt = lineplot(test_mean, test_z, title="mean irradiance - depth", name="test data",
-               xlabel="mean irradiance", ylabel="depth", canvas=DotCanvas)
-
-show(plt)
-
-plot = heatmap(test_edxz)
-show(plot)
-
-plot1 = heatmap(test_ed[:,:,50])
-show(plot1)
+Bench_mean = h5open("data/benchmark_data/ed_mean.h5","r")
+bench_mean = read(Bench_mean,"mean")
+close(Bench_mean)
 
 MaxPercentDif(array1,array2) = findmax(broadcast(abs,((array1-array2)/(array1))*100))
 (Diff_mean,loc_mean) = MaxPercentDif(test_mean,bench_mean)
 
 @testset "Result" begin
     @testset "export data" begin
-        
+        @test length(test_z) == parameter.nz
+        @test mean(ed[:,:,50]) == test_mean[50]
+        @test sqrt(mean(ed[:,:,30].^2)) == test_var[30]
+        @test test_cv[1] == -1 
+        @test floor(sqrt(test_var[60]^2/test_mean[60]^2-1)) == floor(test_cv[60])
+        @test last(test_ed[1,:,:]) == last(test_edxz[:,:])
+        @test last(test_ed[:,1,:]) == last(test_edyz[:,:])
     end 
     @testset "comparison with benchmark" begin
         @test Diff_mean <= 2
-        @test test_z[loc_mean] >= bench_z[loc_mean-1] || test_z[loc_mean] <= bench_z[loc_mean+1]
+        @test abs((mean(ed[:,:,50])-bench_mean[50])/(bench_mean[50])*100) <= 2
     end 
 end
