@@ -6,14 +6,14 @@ using Random
 using UnicodePlots
 using Statistics
 
-parameter = LightMC.readparams("data/initial_condition/light.yml")
+parameter = LightMC.readparams("data/initial_condition/singleCPU/light.yml")
 ϕps,θps = LightMC.phasePetzold()
 
 η=zeros(parameter.nxs,parameter.nys)
 ηx=zeros(parameter.nxs,parameter.nys)
 ηy=zeros(parameter.nxs,parameter.nys)
 
-fid=h5open("data/initial_condition/surfwave1.h5","r")
+fid=h5open("data/initial_condition/singleCPU/surfwave1.h5","r")
 η0=read(fid,"eta")
 ηx0=read(fid,"ex")
 ηy0=read(fid,"ey")
@@ -98,7 +98,7 @@ Test_edyz = h5open(test_data*"/edyz.h5","r")
 test_edyz = read(Test_edyz,"ed")
 close(Test_edyz)
 
-Bench_mean = h5open("data/benchmark_data/ed_mean.h5","r")
+Bench_mean = h5open("data/benchmark_data/singleCPU/ed_mean.h5","r")
 bench_mean = read(Bench_mean,"mean")
 close(Bench_mean)
 

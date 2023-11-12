@@ -22,3 +22,6 @@ azimuthal angle in the plane of the scattering event relative to the direction o
 ```
 To find the angle between new trajectory and the direction of photons before scattering, we use the Petzold..
 
+```@docs
+phasePetzold()
+```
