@@ -6,7 +6,7 @@ irradiance:
   num: 31
   ztop: 10
 photon:
-  nphoton: 100
+  nphoton: 25
   kr: 10.0
   nxp: 384
   kbc: 0
