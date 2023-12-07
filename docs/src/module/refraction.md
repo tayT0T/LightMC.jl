@@ -3,7 +3,7 @@
 Photons refraction between air and water 
 
 ## Snell's Law 
-angle of reflection 
+angle of reflection [^1]
 ```math
 \theta_{r} = \cos^{-1}|\hat{\xi}'\cdot\hat{n}|
 ```
@@ -19,25 +19,33 @@ Therefore, the angle of reflection, in this module, can be described by
 
 angle of transmission
 ```math
-\theta_{t} = \sin^{-1}\left(\frac{1}{n_{w}}\sin\theta'\right)
+\theta_{t} = \sin^{-1}\left(\frac{1}{n_{w}}\sin\theta_{r}\right)
 ```
-
+Substitute the ``\theta_{r}`` that we found above. 
 ```math
-\theta_{t} = \sin^{-1}\left(\frac{n_{a}}{n_{w}}\sqrt{\frac{\left(\eta_{x}\right)^{2}+\left(\eta_{y}\right)^{2}}{1+\left(\eta_{x}\right)^{2}+\left(\eta_{y}\right)^{2}}}\right)
+\theta_{t} = \sin^{-1}\left(\frac{1}{n_{w}}\sqrt{\frac{\left(\eta_{x}\right)^{2}+\left(\eta_{y}\right)^{2}}{1+\left(\eta_{x}\right)^{2}+\left(\eta_{y}\right)^{2}}}\right)
 ```
 
 
 ## Fresnel Reflectance 
 
+In our package, we calculate the energy proportion of the light ray that being transmitted to the water, transmission coefficient. [^2]
 ```math
-r(\theta') \equiv r(\hat{\xi}'\cdot\hat{n}) = \frac{1}{2}\left\{\left[\frac{\sin(\theta'-\theta_{t})}{\sin(\theta'-\theta_{t})}\right]^2+\left[\frac{\tan(\theta'-\theta_{t})}{\tan(\theta'-\theta_{t})}\right]^2\right\}
+t_{\perp}=\frac{2\sin(\theta_{t})\cos(\theta_{r})}{\sin{\theta_{t}+\theta_{r}}}
 ```
+```math
+t_{\parallel}=\frac{2\sin(\theta_{t})\cos(\theta_{r})}{\sin{\theta_{t}+\theta_{r}}\cos{\theta_{r}-\theta_{t}}}
+```
+When ``t_{\perp}`` is corresponding to the transmitted energy of the light ray in which the electric field, that constitute the electro magnetic wave, perpendicular to the plane-of-incident , and ``t_{\parallel}`` is corresponding to the transmitted energy of the light ray in which the electric field, that constitute the electro magnetic wave, parallels to the plane-of-incident.
+To find the total transmitted energy ``t_{\perp} + t_{\parallel}``, we combine two equations, ``t_{\perp} + (-r_{\perp})=1`` and ``t_{\parallel}+r_{\parallel}=1``. Then, we normalize the total transmitted energy, so that all the values fall between 0 and 1. Therefore, 
 
 ```math
-r(\theta') \equiv r(\hat{\xi}'\cdot\hat{n}) = \frac{1}{2}\left\{\left[\frac{2\sin(\theta_{t})\cos(\theta')}{\sin(\theta'-\theta_{t})}\right]^2+\left[\frac{2\sin(\theta_{t})\cos(\theta')}{\sin(\theta'+\theta_{t})\cos(\theta'-\theta_{t})}\right]^2\right\}
+t = \frac{1}{2}\left\{\left[\frac{2\sin(\theta_{t})\cos(\theta')}{\sin(\theta'-\theta_{t})}\right]^2+\left[\frac{2\sin(\theta_{t})\cos(\theta')}{\sin(\theta'+\theta_{t})\cos(\theta'-\theta_{t})}\right]^2\right\}
 ```
 
 ## result  
+
+We, then, transform the reflection angle into the azimuthal angle and polar angle in the spherical coordination. 
 
 ```math
 temx = -\frac{\eta_{x}}{\sqrt{(\eta_{x})^{2}+(\eta_{y})^{2}}}
@@ -46,3 +54,6 @@ temx = -\frac{\eta_{x}}{\sqrt{(\eta_{x})^{2}+(\eta_{y})^{2}}}
 temy = -\frac{\eta_{y}}{\sqrt{(\eta_{x})^{2}+(\eta_{y})^{2}}}
 ```
 
+## Reference 
+[^1]: Mobley, C. (1994). Across the Surface. *Light and Water: Radiative Transfer in Natural Waters* (pp. 155-157). Academic Press. 
+[^2]: Hecht, E. (2001). The Propagation of Light. *Optics* (pp. 113-115). Addison-Wesley. 

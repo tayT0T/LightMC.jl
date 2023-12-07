@@ -107,29 +107,29 @@ xpb,ypb,zpb,θ,ϕ,fres=interface(η,ηx,ηy,p)
             end
         end
     end
-end
 
-if myid!=0
-    MPI.Send(count,0,myid,comm)
-    if count[1]>0
-        MPI.Send(ed1d[1:count[1]],0,10000+myid,comm)
-        MPI.Send(edi[1:count[1]],0,20000+myid,comm)
-        MPI.Send(edj[1:count[1]],0,30000+myid,comm)
-        MPI.Send(edk[1:count[1]],0,40000+myid,comm)
+    if myid!=0
+        MPI.Send(count,0,myid,comm)
+        if count[1]>0
+            MPI.Send(ed1d[1:count[1]],0,10000+myid,comm)
+            MPI.Send(edi[1:count[1]],0,20000+myid,comm)
+            MPI.Send(edj[1:count[1]],0,30000+myid,comm)
+            MPI.Send(edk[1:count[1]],0,40000+myid,comm)
+            count[1]=0
+        end
+    else
+        updateed!(ed,ed1d,edi,edj,edk,count[1])
         count[1]=0
-    end
-else
-    updateed!(ed,ed1d,edi,edj,edk,count[1])
-    count[1]=0
-    for i=1:ncpu-1
-        ndat=[0]
-        MPI.Recv!(ndat,i,i,comm)
-        if ndat[1]>0
-            MPI.Recv!(ed1d,i,10000+i,comm)
-            MPI.Recv!(edi,i,20000+i,comm)
-            MPI.Recv!(edj,i,30000+i,comm)
-            MPI.Recv!(edk,i,40000+i,comm)
-            updateed!(ed,ed1d,edi,edj,edk,ndat[1])
+        for i=1:ncpu-1
+            ndat=[0]
+            MPI.Recv!(ndat,i,i,comm)
+            if ndat[1]>0
+                MPI.Recv!(ed1d,i,10000+i,comm)
+                MPI.Recv!(edi,i,20000+i,comm)
+                MPI.Recv!(edj,i,30000+i,comm)
+                MPI.Recv!(edk,i,40000+i,comm)
+                updateed!(ed,ed1d,edi,edj,edk,ndat[1])
+            end
         end
     end
 end

@@ -8,7 +8,7 @@
     num: 31
     ztop: 10
   photon:
-    nphoton: 10000000
+    nphoton: 100000
     kr: 10
     nxp: 512
     kbc: 0

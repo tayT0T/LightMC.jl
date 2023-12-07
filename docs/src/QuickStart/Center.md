@@ -1,14 +1,13 @@
 # Quick Start
-
-```@example
-import LightMC
+```@example 1
+tempdir() # hide 
 ```
 ## Initial Condition 
 
 For the input initial condition, the function readparam will automatically read the input from light.yml file. 
 Below, is the structure contained in the light.yml file.
 
-```@example
+```@example 1
 using YAML
 
 YAML.write_file("light.yml","
@@ -20,7 +19,7 @@ irradiance:
   num: 31
   ztop: 10
 photon:
-  nphoton: 10000000
+  nphoton: 100000
   kr: 10
   nxp: 512
   kbc: 0
@@ -35,13 +34,13 @@ wave:
 ")
 ```
 We, then, store all the input variable in the struct p, by using the function below. 
-```@example
+```@example 1
 using Pkg # hide
 Pkg.activate("https://github.com/tayT0T/LightMC.jl.git") # hide
 import LightMC
 p=readparams()
 ```
-```@example
+```@example 1
 allind=1:p.nphoton
 "η is the height(z axis) corresponding to each grid point on the surface, 2d array of grid number in x and y direction"
 η=zeros(p.nxs,p.nys)
@@ -52,7 +51,7 @@ allind=1:p.nphoton
 ϕps,θps=phasePetzold()
 ```
 
-```@example
+```@example 1
 ed=zeros(p.nx,p.ny,p.nz)
 esol=zeros(p.num,p.nz)
 area=zeros(4)
