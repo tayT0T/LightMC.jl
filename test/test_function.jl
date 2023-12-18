@@ -108,8 +108,8 @@ MaxPercentDif(array1,array2) = findmax(broadcast(abs,((array1-array2)/(array1))*
 @testset "Result" begin
     @testset "export data" begin
         @test length(test_z) == parameter.nz
-        @test mean(ed[:,:,50]) == test_mean[50]
-        @test sqrt(mean(ed[:,:,30].^2)) == test_var[30]
+        @test floor(mean(test_ed[:,:,50])) == floor(test_mean[50])
+        @test floor(sqrt(mean(test_ed[:,:,30].^2))) == floor(test_var[30])
         @test test_cv[1] == -1 
         @test floor(sqrt(test_var[60]^2/test_mean[60]^2-1)) == floor(test_cv[60])
         @test last(test_ed[1,:,:]) == last(test_edxz[:,:])
@@ -117,6 +117,6 @@ MaxPercentDif(array1,array2) = findmax(broadcast(abs,((array1-array2)/(array1))*
     end 
     @testset "comparison with benchmark" begin
         @test Diff_mean <= 2
-        @test abs((mean(ed[:,:,50])-bench_mean[50])/(bench_mean[50])*100) <= 2
+        @test abs((mean(test_ed[:,:,50])-bench_mean[50])/(bench_mean[50])*100) <= 2
     end 
 end

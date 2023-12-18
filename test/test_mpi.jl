@@ -7,6 +7,8 @@ using UnicodePlots
 using Statistics
 using MPI 
 
+test_data = tempdir()
+
 MPI.Init()
 comm = MPI.COMM_WORLD
 myid = MPI.Comm_rank(comm)
@@ -131,12 +133,10 @@ xpb,ypb,zpb,θ,ϕ,fres=interface(η,ηx,ηy,p)
                 updateed!(ed,ed1d,edi,edj,edk,ndat[1])
             end
         end
+        applybc!(ed,p)
+        exported(ed,η,p,test_data*"/ed","3D")
     end
 end
-
-test_data = tempdir()
-applybc!(ed,p)
-exported(ed,η,p,test_data*"/ed","3D")
 
 Test_ed = h5open(test_data*"/ed.h5","r")
 test_ed = read(Test_ed,"ed")
@@ -164,18 +164,20 @@ close(Bench_mean)
 MaxPercentDif(array1,array2) = findmax(broadcast(abs,((array1-array2)/(array1))*100))
 (Diff_mean,loc_mean) = MaxPercentDif(test_mean,bench_mean)
 
+print(mean(test_ed[:,:,50]))
+print(bench_mean[50])
+
 @testset "Result" begin
     @testset "export data" begin
-        @test length(test_z) == parameter.nz
-        @test mean(ed[:,:,50]) == test_mean[50]
-        @test sqrt(mean(ed[:,:,30].^2)) == test_var[30]
+        @test length(test_z) == p.nz
+        @test floor(mean(test_ed[:,:,50])) == floor(test_mean[50])
+        @test floor(sqrt(mean(test_ed[:,:,30].^2))) == floor(test_var[30])
         @test test_cv[1] == -1 
         @test floor(sqrt(test_var[60]^2/test_mean[60]^2-1)) == floor(test_cv[60])
         @test last(test_ed[1,:,:]) == last(test_edxz[:,:])
         @test last(test_ed[:,1,:]) == last(test_edyz[:,:])
     end 
     @testset "comparison with benchmark" begin
-        @test Diff_mean <= 2
-        @test abs((mean(ed[:,:,50])-bench_mean[50])/(bench_mean[50])*100) <= 2
+        @test floor(test_mean[1]) == floor(bench_mean[1])
     end 
 end

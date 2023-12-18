@@ -9,5 +9,5 @@ using UnicodePlots
     run(`julia test_function.jl`)
     
     @info "testing muliple cpu via MPI package"
-    run(`mpirun -n 4 julia test_mpi.jl`)
-end
+    run(`mpirun -n 2 julia test_mpi.jl`)
+end 

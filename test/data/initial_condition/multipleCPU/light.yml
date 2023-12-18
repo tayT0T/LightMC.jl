@@ -8,10 +8,10 @@ irradiance:
 photon:
   nphoton: 25
   kr: 10.0
-  nxp: 384
+  nxp: 512
   kbc: 0
   b: 0.006
-  nyp: 384
+  nyp: 512
   a: 0.007
 wave:
   pey: 0.07853981633974483
