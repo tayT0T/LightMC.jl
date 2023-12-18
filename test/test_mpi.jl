@@ -161,12 +161,6 @@ Bench_mean = h5open("data/benchmark_data/multipleCPU/ed_mean.h5","r")
 bench_mean = read(Bench_mean,"mean")
 close(Bench_mean)
 
-MaxPercentDif(array1,array2) = findmax(broadcast(abs,((array1-array2)/(array1))*100))
-(Diff_mean,loc_mean) = MaxPercentDif(test_mean,bench_mean)
-
-print(mean(test_ed[:,:,50]))
-print(bench_mean[50])
-
 @testset "Result" begin
     @testset "export data" begin
         @test length(test_z) == p.nz
